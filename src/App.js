@@ -45,7 +45,7 @@ function App() {
   return (
     <>
    <Routes>
-  {console.log(booksList)}
+ 
       <Route path="/" element={<Shelves shelves={shelves} books={booksList}  handleSelect={handleSelect}/>} />
       <Route path="/search" element={<Search onSearch={handleSearch} searchBooks={searchBooks} handleSelect={handleSelect}/>} />
 

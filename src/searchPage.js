@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Book from "./bookCard";
 import { useEffect, useState } from "react";
+import {PropTypes} from 'prop-types'
 const Search = ({onSearch,searchBooks,handleSelect}) => {
   const [query,setQuery]=useState("")
     const handleChange=(e)=>{
@@ -37,5 +38,5 @@ const Search = ({onSearch,searchBooks,handleSelect}) => {
         </div>
     </> );
 }
- 
+Search.propTypes={query:PropTypes.string,handleSelect:PropTypes.func}
 export default Search;

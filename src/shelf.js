@@ -3,7 +3,7 @@ import Book from "./bookCard";
 
 const Shelf = ({shelf,books,handleSelect}) => {
  
-const [loading,setLoading]=useState(false)
+
 const [shelfBooks,setShelfBooks]=useState([])
   useEffect(()=>{
 
@@ -17,7 +17,6 @@ const [shelfBooks,setShelfBooks]=useState([])
     getShelfBooks(shelf)
     
 
-    setLoading(true)  
     
   },[books])
 

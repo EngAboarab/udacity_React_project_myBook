@@ -9,8 +9,7 @@ function App() {
   const [booksList,setBooksList]=useState([]);
   const [searchBooks,setSearchBooks]=useState([]);
   const [shelves,setShelves]=useState(["currentlyReading","wantToRead","read"])
-  const [load,setLoad]=useState(false)
- const[querysetQuery]=useState("")
+
   useEffect(()=>{
     const getData=async()=>{
       const data=await apis.getAll()
@@ -21,13 +20,13 @@ function App() {
     getData();
   
  setSearchBooks([])
- console.log(searchBooks)
+ 
   },[])
 
 
   const handleSearch=(bookName)=>{
   const splitBookName=bookName.split(' ').join('')
-  console.log(splitBookName)
+  
     setSearchBooks(bookName.length>0?booksList.filter(b=>b.title.toLowerCase().split(' ').join('').includes(splitBookName.toLowerCase())):[])
   }
 
@@ -46,7 +45,7 @@ function App() {
   return (
     <>
    <Routes>
-  
+  {console.log(booksList)}
       <Route path="/" element={<Shelves shelves={shelves} books={booksList}  handleSelect={handleSelect}/>} />
       <Route path="/search" element={<Search onSearch={handleSearch} searchBooks={searchBooks} handleSelect={handleSelect}/>} />
 

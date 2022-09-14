@@ -1,11 +1,22 @@
-const Book = ({bookDetails,shelf,handleSelect}) => {
+import {useEffect, useState} from "react";
+import {PropTypes} from 'prop-types'
+const Book = ({bookDetails,shelves,handleSelect}) => {
 
+  const [updatedBook,setUpdatedBook]=useState(bookDetails)
+
+  useEffect(()=>{
+setUpdatedBook(bookDetails)
+  },[bookDetails])
+  
   const handleChange=(e)=>{
+  
    const  selectedShelf=e.target.value
-   handleSelect(bookDetails,selectedShelf)
+
+   handleSelect(updatedBook,selectedShelf)
   }
 
     return ( <>
+    
       <div className="book">
                     <div className="book-top">
                       <div
@@ -14,28 +25,33 @@ const Book = ({bookDetails,shelf,handleSelect}) => {
                           width: 128,
                           height: 193,
                           backgroundImage:
-                            `url(${bookDetails.imageLinks.thumbnail})`,
+                            `url(${updatedBook?.imageLinks?.thumbnail})`,
                         }}
                       ></div>
                       <div className="book-shelf-changer">
-                        <select value={bookDetails.shelf} onChange={(e)=>handleChange(e)}>
+                        <select value={updatedBook.shelf} onChange={(e)=>handleChange(e)} >
+                         
                           <option value="none" disabled>
                             Move to...
                           </option>
-                          <option value="currentlyReading">
-                            Currently Reading
-                          </option>
-                          <option value="wantToRead" >Want to Read</option>
-                          <option value="read">Read</option>
-                          <option value="none">None</option>
+                          {shelves.map(shelfDetail=>
+                            <option  value={shelfDetail.shelfName}>{shelfDetail.shelfDisplayName}</option>
+                          )}
+                          {updatedBook.shelf!="none"&&<option value="">None</option>}
+                          
                         </select>
                       </div>
                     </div>
-                    <div className="book-title">{bookDetails.title}</div>
-                    <div className="book-authors">{bookDetails.authors[0]}</div>
+                    <div className="book-title">{updatedBook.title}</div>
+                    <div className="book-authors">{updatedBook.authors?.join(",")}</div>
+                  
                   </div>
     
     </> );
 }
- 
+ Book.propTypes={
+  bookDetails:PropTypes.object.isRequired,
+  handleSelect:PropTypes.func.isRequired,
+  shelves:PropTypes.array.isRequired
+ }
 export default Book;

@@ -8,46 +8,68 @@ function App() {
   // const [showSearchPage, setShowSearchpage] = useState(false);
   const [booksList,setBooksList]=useState([]);
   const [searchBooks,setSearchBooks]=useState([]);
-  const [shelves,setShelves]=useState(["currentlyReading","wantToRead","read"])
-
-  useEffect(()=>{
-    const getData=async()=>{
-      const data=await apis.getAll()
-      setBooksList(data)
-      
-     
-    }
-    getData();
+  const [tempList,setTempList]=useState()
+  // const [shelves,setShelves]=useState(["currentlyReading","wantToRead","read"])
+  const [shelves,setShelves]=useState([
+    
+    {id:"1",shelfName:"currentlyReading",shelfDisplayName:"Currently Reading"},
+    {id:"2",shelfName:"wantToRead",shelfDisplayName:"Want To Read"},
+    {id:"3",shelfName:"read",shelfDisplayName:" Read"},
+    
   
- setSearchBooks([])
+  ])
+  
+
+  
+  useEffect(()=>{
+  
+
+      const getData=async()=>{
+        const data=await apis.getAll()
+        setBooksList(data)
+        
+       
+      }
+      getData();
+
+
  
   },[])
 
-
-  const handleSearch=(bookName)=>{
-  const splitBookName=bookName.split(' ').join('')
-  
-    setSearchBooks(bookName.length>0?booksList.filter(b=>b.title.toLowerCase().split(' ').join('').includes(splitBookName.toLowerCase())):[])
-  }
-
-
-
-
   const handleSelect=(bookDetails,selectedShelf)=>{
-    const updatedList= booksList.map((b)=>
-      b.title==bookDetails.title?{...b,shelf:selectedShelf}:b
-    )
-    setBooksList(updatedList)
-    apis.update(bookDetails,selectedShelf)
-    
+
+console.log(selectedShelf);
+     
+    if(selectedShelf==""||selectedShelf=="none"){
+      selectedShelf="none";
+      const updateList=booksList.filter(b=>b.id!=bookDetails.id)
+      setBooksList(updateList)
+      apis.update(bookDetails,selectedShelf)
+     }
+     
+     if (!booksList.includes(bookDetails)){
+        bookDetails.shelf=selectedShelf
+        const updatedList=[...booksList,bookDetails]
+         
+        setBooksList(updatedList)
+        apis.update(bookDetails,selectedShelf)
+       
+      }else{
+      const updatedList= booksList.map((b)=>
+      b.id==bookDetails.id?{...b,shelf:selectedShelf}:b)
+      setBooksList(updatedList)
+      apis.update(bookDetails,selectedShelf)
+     }
+
   }
+
 
   return (
     <>
    <Routes>
  
       <Route path="/" element={<Shelves shelves={shelves} books={booksList}  handleSelect={handleSelect}/>} />
-      <Route path="/search" element={<Search onSearch={handleSearch} searchBooks={searchBooks} handleSelect={handleSelect}/>} />
+      <Route path="/search" element={<Search handleSelect={handleSelect} shelves={shelves} books={booksList} />} />
 
     </Routes>
     </>

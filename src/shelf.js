@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import Book from "./bookCard";
-
-const Shelf = ({shelf,books,handleSelect}) => {
+import{PropTypes} from 'prop-types'
+const Shelf = ({shelves,books,shelf,handleSelect}) => {
  
 
 const [shelfBooks,setShelfBooks]=useState([])
   useEffect(()=>{
-
-    const getShelfBooks=async(shelf)=>{
-      const shelfBooks=await  books.filter(c=>c.shelf==shelf)
+ 
+    const getShelfBooks=(shelf)=>{
+      const shelfBooks=  books.filter(c=>c.shelf==shelf.shelfName)
       setShelfBooks(shelfBooks)
     }
 
@@ -24,10 +24,10 @@ const [shelfBooks,setShelfBooks]=useState([])
     
     <div>
           <div className="bookshelf">
-            <h2 className="bookshelf-title">{shelf}</h2>
+            <h2 className="bookshelf-title">{shelf.shelfDisplayName}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">{
-                books.length>0?shelfBooks.length>0?shelfBooks.map((b,i)=><li key={b.id}><Book bookDetails={b} shelf={shelf} handleSelect={handleSelect}/></li>):<h2>empty shelf,add books here</h2>:<h2>Loading</h2>
+                books.length>0?shelfBooks.length>0?shelfBooks.map((b,i)=><li key={b.id}><Book bookDetails={b}  handleSelect={handleSelect} shelves={shelves}/></li>):<h2>empty shelf,add books here</h2>:<h2>Loading</h2>
               }
               
                
@@ -39,5 +39,5 @@ const [shelfBooks,setShelfBooks]=useState([])
     
     </> );
 }
- 
+ Shelf.propTypes={shelves:PropTypes.array,books:PropTypes.array,shelf:PropTypes.object,handleSelect:PropTypes.func}
 export default Shelf;

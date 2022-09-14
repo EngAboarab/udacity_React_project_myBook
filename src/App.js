@@ -7,8 +7,7 @@ import * as apis from "./BooksAPI"
 function App() {
   // const [showSearchPage, setShowSearchpage] = useState(false);
   const [booksList,setBooksList]=useState([]);
-  const [searchBooks,setSearchBooks]=useState([]);
-  const [tempList,setTempList]=useState()
+ 
   // const [shelves,setShelves]=useState(["currentlyReading","wantToRead","read"])
   const [shelves,setShelves]=useState([
     
@@ -40,9 +39,9 @@ function App() {
 
 console.log(selectedShelf);
      
-    if(selectedShelf==""||selectedShelf=="none"){
+    if(selectedShelf===""||selectedShelf==="none"){
       selectedShelf="none";
-      const updateList=booksList.filter(b=>b.id!=bookDetails.id)
+      const updateList=booksList.filter(b=>b.id!==bookDetails.id)
       setBooksList(updateList)
       apis.update(bookDetails,selectedShelf)
      }
@@ -56,7 +55,7 @@ console.log(selectedShelf);
        
       }else{
       const updatedList= booksList.map((b)=>
-      b.id==bookDetails.id?{...b,shelf:selectedShelf}:b)
+      b.id===bookDetails.id?{...b,shelf:selectedShelf}:b)
       setBooksList(updatedList)
       apis.update(bookDetails,selectedShelf)
      }

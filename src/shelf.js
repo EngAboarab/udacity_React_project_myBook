@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Book from "./bookCard";
 import{PropTypes} from 'prop-types'
+import debounce from "lodash.debounce"
 const Shelf = ({shelves,books,shelf,handleSelect}) => {
  
 
 const [shelfBooks,setShelfBooks]=useState([])
+
+
+
   useEffect(()=>{
  
     const getShelfBooks=(shelf)=>{
-      const shelfBooks=  books.filter(c=>c.shelf==shelf.shelfName)
+      const shelfBooks=  books.filter(c=>c.shelf===shelf.shelfName)
       setShelfBooks(shelfBooks)
     }
 
@@ -18,7 +22,7 @@ const [shelfBooks,setShelfBooks]=useState([])
     
 
     
-  },[books])
+  },[books,shelf])
 
     return ( <>
     

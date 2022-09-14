@@ -37,7 +37,7 @@ setUpdatedBook(bookDetails)
                           {shelves.map(shelfDetail=>
                             <option  value={shelfDetail.shelfName}>{shelfDetail.shelfDisplayName}</option>
                           )}
-                          {updatedBook.shelf!="none"&&<option value="">None</option>}
+                          {updatedBook.shelf!=="none"&&<option value="">None</option>}
                           
                         </select>
                       </div>

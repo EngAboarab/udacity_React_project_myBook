@@ -31,11 +31,15 @@ setUpdatedBook(bookDetails)
                       <div className="book-shelf-changer">
                         <select value={updatedBook.shelf} onChange={(e)=>handleChange(e)} >
                          
-                          <option value="none" disabled>
-                            Move to...
+                        {updatedBook.shelf=="none"?<option value="none" disabled>
+                        Add to...
+                          </option>:
+                        <option value="none" disabled>
+                        Move to...
                           </option>
+                        }
                           {shelves.map(shelfDetail=>
-                            <option  value={shelfDetail.shelfName}>{shelfDetail.shelfDisplayName}</option>
+                            <option key={shelfDetail.id} value={shelfDetail.shelfName}>{shelfDetail.shelfDisplayName}</option>
                           )}
                           {updatedBook.shelf!=="none"&&<option value="">None</option>}
                           

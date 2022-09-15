@@ -13,7 +13,7 @@ const Shelves = ({shelves,books,handleSelect}) => {
       </div>
       <div className="list-books-content">
 
-{shelves.map((shelf,i)=><Shelf shelf={shelf} books={books} shelves={shelves} handleSelect={handleSelect}/>)}
+{shelves.map((shelf,i)=><div key={i}><Shelf shelf={shelf} books={books} shelves={shelves} handleSelect={handleSelect}/></div>)}
 
        
       <div className="open-search">
